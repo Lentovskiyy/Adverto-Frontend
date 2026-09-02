@@ -32,9 +32,9 @@ export default function ProductCard() {
           </div>
           <p className="text-sm text-gray-500">Москва, сегодня в 12:40</p>
         </div>
-        <a href="/" className="text-center mt-4 w-full bg-primary-bright hover:bg-primary-dark text-gray-50 font-medium py-2.5 rounded-xl  text-sm">
-          Подробнее
-        </a>
+        {/*<a href="/" className="text-center mt-4 w-full bg-primary-bright hover:bg-primary-dark text-gray-50 font-medium py-2.5 rounded-xl  text-sm">*/}
+        {/*  Подробнее*/}
+        {/*</a>*/}
       </div>
     </div>
   )

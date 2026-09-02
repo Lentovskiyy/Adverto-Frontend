@@ -28,3 +28,7 @@ li {
     transition-duration: 0ms !important;
     animation-duration: 0ms !important;
 }
+
+button {
+    cursor: pointer
+}
