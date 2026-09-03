@@ -1,14 +1,32 @@
-import {Heart, Search} from "lucide-react";
+"use client"
+
+import {Heart, Search, Menu, X, Grid, PlusCircle, User} from "lucide-react";
+import {useEffect, useState} from "react";
+import HeaderBurgerMenuButtons from "@/compnoents/ui/HeaderBurgerMenuButtons/HeaderBurgerMenuButtons";
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   return (
-    <header className="flex flex-col px-12 py-4 bg-gray-50 sticky gap-4 top-0 z-50 ">
+    <header className="px-2 md:px-4  py-2 md:py-4 flex flex-col  bg-gray-50 sticky gap-2 md:gap-4 top-0 z-50 ">
       <nav className="max-w-[1600px] mx-auto flex justify-between items-center bg-gray-50 w-full">
         <a href="/" className="text-2xl font-extrabold tracking-tight flex items-center gap-1">
           Adverto
         </a>
 
-        <ul className="flex items-center justify-center gap-8 font-medium text-gray-600   px-6 py-3 rounded-2xl ">
+        <ul className="hidden lg:flex items-center justify-center  gap-3 md:gap-4 lg:gap-8 font-medium text-gray-600   px-6 py-3 rounded-2xl ">
           <li>
             <a href="/" className="flex items-center justify-center gap-1 hover:text-primary-bright ">
               <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +56,7 @@ export default function Header() {
           </li>
         </ul>
 
-        <div className="flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-4">
           <a
             href="/create"
             className="bg-accent-normal hover:text-white font-medium px-5 py-2.5 rounded-xl transition-colors"
@@ -46,26 +64,82 @@ export default function Header() {
             Разместить объявление
           </a>
           <a
-
             href="/profile"
             className="border-2 hover:border-primary-normal border-primary-border text-primary-normal hover:bg-primary-normal hover:text-gray-50 font-medium px-5 py-2 rounded-xl transition-colors"
           >
             Профиль
           </a>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="flex lg:hidden p-2 text-gray-700 hover:text-primary-normal transition-colors"
+        >
+          <Menu className="w-8 h-8" />
+        </button>
+
+        {isOpen && (
+          <div className="fixed inset-0 z-50 flex">
+            <div
+              className="hidden [@media(min-width:480px)]:flex fixed inset-0 bg-black/50 transition-opacity"
+              onClick={() => setIsOpen(false)}
+            />
+
+            <div className="relative w-full min-[480px]:max-w-[50%] sm:max-w-md   bg-white h-full shadow-2xl z-10 flex flex-col p-3 sm:p-6">
+              <div className="flex items-center justify-between mb-8">
+                <span className="text-2xl font-bold text-gray-900">Меню</span>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 text-gray-500 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-8 h-8" />
+                </button>
+              </div>
+              <nav className="flex flex-col gap-2">
+                <HeaderBurgerMenuButtons
+                  title="Каталог"
+                  url="/"
+                  icon={Grid}
+                  onClick={() => setIsOpen(false)}
+                />
+                <HeaderBurgerMenuButtons
+                  title="Избранное"
+                  url="/"
+                  icon={Heart}
+                  onClick={() => setIsOpen(false)}
+                />
+                <HeaderBurgerMenuButtons
+                  title="Разместить объявление"
+                  url="/"
+                  icon={PlusCircle}
+                  onClick={() => setIsOpen(false)}
+                />
+                <HeaderBurgerMenuButtons
+                  title="Профиль"
+                  url="/"
+                  icon={User}
+                  onClick={() => setIsOpen(false)}
+                />
+              </nav>
+            </div>
+          </div>
+        )}
       </nav>
 
-      <div className="max-w-[1600px] mx-auto w-full flex items-center h-[52px] gap-4">
-        <button type="button" className="hover:bg-primary-dark h-full px-4 bg-primary-normal rounded-2xl whitespace-nowrap text-gray-50 font-medium">
+      <div className="max-w-[1600px] mx-auto w-full flex items-center h-[50px] md:h-[60px] gap-2 md:gap-4 ">
+        <button type="button" className="hidden min-[500px]:inline-block hover:bg-primary-dark h-full px-2 md:px-4 bg-primary-normal rounded-2xl whitespace-nowrap text-gray-50 font-medium">
           Все категорий
         </button>
 
         <div className="flex h-full max-w-[1000px] w-full bg-primary-normal border-2 border-primary-normal rounded-xl">
-          <div className="h-full w-full ">
+          <div className="relative h-full w-full flex items-center bg-gray-50 border border-gray-200 rounded-xl  transition-all">
+            <Search className="w-5 h-5 md:w-6 md:h-6 text-gray-400 shrink-0 mx-1 md:mx-2" />
             <input
               type="text"
               placeholder="Поиск по объявлениям..."
-              className="w-full bg-white  h-full py-3 rounded-xl    text-sm focus:outline-none focus:border-primary-normal focus:ring-2 focus:ring-primary-normal/20 transition-all text-gray-900 placeholder:text-gray-400 shadow-2xs"
+              className="w-full bg-transparent h-full text-lg focus:outline-none text-gray-900 placeholder:text-gray-400"
             />
           </div>
 
